@@ -28,6 +28,10 @@ class StepConverter(Converter):
     tags = ["tag:stsci.edu:gwcs/step-*"]
     types = ["gwcs.wcs.Step"]
 
+    def select_tag(self, obj, tags, ctx):
+        # pick the oldest version
+        return sorted(tags)[0]
+
     def from_yaml_tree(self, node, tag, ctx):
         from ..wcs import Step
         return Step(frame=node['frame'], transform=node.get('transform', None))
