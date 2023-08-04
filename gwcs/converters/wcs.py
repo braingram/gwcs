@@ -13,6 +13,9 @@ class WCSConverter(Converter):
     tags = ["tag:stsci.edu:gwcs/wcs-*"]
     types = ["gwcs.wcs.WCS"]
 
+    def select_tag(self, obj, tags, ctx):
+        return sorted(tags)[-1]
+
     def from_yaml_tree(self, node, tag, ctx):
         from ..wcs import WCS
         return WCS(node['steps'], name=node['name'])
@@ -29,8 +32,7 @@ class StepConverter(Converter):
     types = ["gwcs.wcs.Step"]
 
     def select_tag(self, obj, tags, ctx):
-        # pick the oldest version
-        return sorted(tags)[0]
+        return sorted(tags)[-1]
 
     def from_yaml_tree(self, node, tag, ctx):
         from ..wcs import Step
